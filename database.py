@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Abhi%403105@localhost:5432/anjalitent" # Change 'postgres' and 'password' to your actual credentials
+SQLALCHEMY_DATABASE_URL = "postgresql://anjalitent_user:z9IkNJ8ZFH85dZ2SGXBDUO79BV1eyIw6@dpg-d6vsdjvfte5s73e2njqg-a/anjalitent" # Change 'postgres' and 'password' to your actual credentials
 # If using PostgreSQL:
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
