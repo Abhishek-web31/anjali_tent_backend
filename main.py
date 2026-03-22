@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from typing import List
 
 import models, schemas, crud
-from database import engine, get_db
+from database import engine, get_db, SessionLocal
 import cloudinary
 import cloudinary.utils
 import time
@@ -33,6 +33,29 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Create initial admin user if it doesn't exist (for production setup)
+@app.on_event("startup")
+def startup_event():
+    db = SessionLocal()
+    try:
+        admin_email = "abhishekrajputjbp@gmail.com"
+        db_admin = crud.get_admin_by_email(db, email=admin_email)
+        if not db_admin:
+            admin_data = schemas.AdminCreate(
+                name="Abhishek Rajput",
+                email=admin_email,
+                password="Abhi@3105"
+            )
+            crud.create_admin(db, admin_data)
+            print(f"✅ Initial admin created: {admin_email}")
+        else:
+            # Optionally update password if user wants to ensure it's set
+            pass 
+    except Exception as e:
+        print(f"❌ Error creating initial admin: {e}")
+    finally:
+        db.close()
 
 @app.get("/")
 def read_root():
